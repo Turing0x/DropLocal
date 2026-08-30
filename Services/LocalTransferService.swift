@@ -1,15 +1,19 @@
 import Foundation
 import Network
-import Combine
 #if canImport(UIKit)
 import UIKit
 #endif
 
+// NOTA: este servicio sigue hablando el protocolo HTTP artesanal original
+// (`_locdrop._tcp`, cabeceras `X-File-Name-Base64` / `X-Sender-Name`).
+// La Sprint 0 es solo saneamiento: no se toca el protocolo todavía.
+// Se sustituirá por el protocolo de LocalSend en la Sprint 1.
 @MainActor
-final class LocalTransferService: ObservableObject {
-    @Published private(set) var devices: [DiscoveredDevice] = []
-    @Published private(set) var isDiscovering = false
-    @Published private(set) var receivedFiles: [URL] = []
+@Observable
+final class LocalTransferService {
+    private(set) var devices: [DiscoveredDevice] = []
+    private(set) var isDiscovering = false
+    private(set) var receivedFiles: [URL] = []
 
     private let serviceType = "_locdrop._tcp"
     private let browserQueue = DispatchQueue(label: "com.locdrop.browser")
@@ -144,8 +148,6 @@ final class LocalTransferService: ObservableObject {
     private static var currentDeviceName: String {
         #if os(iOS)
         UIDevice.current.name
-        #elseif os(macOS)
-        Host.current().localizedName ?? ProcessInfo.processInfo.hostName
         #else
         ProcessInfo.processInfo.hostName
         #endif
@@ -183,13 +185,23 @@ final class LocalTransferService: ObservableObject {
         incoming.receive()
     }
 
+    // Bug #1 de la auditoría: `stateUpdateHandler` puede dispararse más de una vez
+    // (p. ej. `.ready` y luego `.failed`), y reanudar una `CheckedContinuation` ya
+    // consumida es un fallo fatal, no un warning. `OneShotFlag` garantiza que solo
+    // el primer estado relevante reanuda la continuación, y limpiamos el handler
+    // justo después para que no vuelva a dispararse sobre esta conexión.
     private func waitForReady(_ connection: NWConnection) async throws {
+        let flag = OneShotFlag()
         try await withCheckedThrowingContinuation { (continuation: CheckedContinuation<Void, Error>) in
             connection.stateUpdateHandler = { state in
                 switch state {
                 case .ready:
+                    guard flag.tryFire() else { return }
+                    connection.stateUpdateHandler = nil
                     continuation.resume(returning: ())
                 case .failed, .cancelled:
+                    guard flag.tryFire() else { return }
+                    connection.stateUpdateHandler = nil
                     continuation.resume(throwing: TransferServiceError.connectionFailed)
                 default:
                     break
@@ -222,104 +234,5 @@ final class LocalTransferService: ObservableObject {
                 }
             }
         }
-    }
-}
-
-private final class IncomingTransfer {
-    private let connection: NWConnection
-    private let onComplete: (URL) -> Void
-    private var buffer = Data()
-    private var headerParsed = false
-    private var expectedBodyLength: Int64 = 0
-    private var receivedBodyLength: Int64 = 0
-    private var outputURL: URL?
-    private var outputHandle: FileHandle?
-
-    init(connection: NWConnection, onComplete: @escaping (URL) -> Void) {
-        self.connection = connection
-        self.onComplete = onComplete
-    }
-
-    func receive() {
-        connection.receive(minimumIncompleteLength: 1, maximumLength: 64 * 1024) { [weak self] data, _, isComplete, error in
-            guard let self else { return }
-            if let data {
-                self.buffer.append(data)
-                self.consumeBuffer()
-            }
-
-            if error != nil || isComplete || self.receivedBodyLength >= self.expectedBodyLength && self.headerParsed {
-                self.finish()
-            } else {
-                self.receive()
-            }
-        }
-    }
-
-    private func consumeBuffer() {
-        if !headerParsed {
-            guard let separator = buffer.range(of: Data("\r\n\r\n".utf8)) else { return }
-            let headerData = buffer.subdata(in: 0..<separator.lowerBound)
-            let bodyStart = separator.upperBound
-            buffer = buffer.subdata(in: bodyStart..<buffer.endIndex)
-            parseHeaders(String(decoding: headerData, as: UTF8.self))
-            headerParsed = true
-        }
-
-        guard headerParsed, let handle = outputHandle, !buffer.isEmpty else { return }
-        let remaining = expectedBodyLength - receivedBodyLength
-        let count = min(Int64(buffer.count), remaining)
-        guard count > 0 else { return }
-        let bodyChunk = buffer.prefix(Int(count))
-        try? handle.write(contentsOf: Data(bodyChunk))
-        receivedBodyLength += count
-        buffer.removeFirst(Int(count))
-    }
-
-    private func parseHeaders(_ headers: String) {
-        let lines = headers.components(separatedBy: "\r\n")
-        var fileName = "archivo-recibido"
-        for line in lines {
-            let parts = line.split(separator: ":", maxSplits: 1).map(String.init)
-            guard parts.count == 2 else { continue }
-            let key = parts[0].lowercased()
-            let value = parts[1].trimmingCharacters(in: .whitespaces)
-            if key == "content-length" {
-                expectedBodyLength = Int64(value) ?? 0
-            } else if key == "x-file-name-base64", let data = Data(base64Encoded: value), let decoded = String(data: data, encoding: .utf8) {
-                fileName = decoded
-            }
-        }
-
-        let safeName = URL(fileURLWithPath: fileName).lastPathComponent
-        let directory = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0]
-            .appendingPathComponent("Received", isDirectory: true)
-        try? FileManager.default.createDirectory(at: directory, withIntermediateDirectories: true)
-        let destination = uniqueURL(directory.appendingPathComponent(safeName))
-        FileManager.default.createFile(atPath: destination.path, contents: nil)
-        outputURL = destination
-        outputHandle = try? FileHandle(forWritingTo: destination)
-    }
-
-    private func finish() {
-        try? outputHandle?.close()
-        if receivedBodyLength == expectedBodyLength, let outputURL {
-            let response = "HTTP/1.1 200 OK\r\nContent-Length: 0\r\nConnection: close\r\n\r\n"
-            connection.send(content: Data(response.utf8), completion: .contentProcessed { [weak self] _ in
-                self?.connection.cancel()
-            })
-            onComplete(outputURL)
-        } else {
-            connection.cancel()
-        }
-    }
-
-    private func uniqueURL(_ url: URL) -> URL {
-        guard FileManager.default.fileExists(atPath: url.path) else { return url }
-        let stem = url.deletingPathExtension().lastPathComponent
-        let ext = url.pathExtension
-        let suffix = UUID().uuidString.prefix(6)
-        let name = ext.isEmpty ? "\(stem)-\(suffix)" : "\(stem)-\(suffix).\(ext)"
-        return url.deletingLastPathComponent().appendingPathComponent(name)
     }
 }

@@ -2,13 +2,14 @@ import Foundation
 import SwiftUI
 
 @MainActor
-final class HomeViewModel: ObservableObject {
-    @Published var selectedFiles: [SelectedFile] = []
-    @Published var selectedDevice: DiscoveredDevice?
-    @Published var records: [TransferRecord] = []
-    @Published var alertMessage: String?
-    @Published var isFileImporterPresented = false
-    @Published var isSending = false
+@Observable
+final class HomeViewModel {
+    var selectedFiles: [SelectedFile] = []
+    var selectedDevice: DiscoveredDevice?
+    var records: [TransferRecord] = []
+    var alertMessage: String?
+    var isFileImporterPresented = false
+    var isSending = false
 
     func addFiles(_ urls: [URL]) {
         let newFiles = urls.map(SelectedFile.init)

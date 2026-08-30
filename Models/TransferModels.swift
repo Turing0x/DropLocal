@@ -1,6 +1,6 @@
 import Foundation
 
-struct DiscoveredDevice: Identifiable, Equatable {
+struct DiscoveredDevice: Identifiable, Equatable, Sendable {
     let id: String
     let name: String
     let detail: String
@@ -46,14 +46,25 @@ struct TransferRecord: Identifiable, Equatable {
 struct SelectedFile: Identifiable, Equatable {
     let id = UUID()
     let url: URL
+    let name: String
+    let size: Int64
 
-    var name: String {
-        url.lastPathComponent
-    }
+    // El tamaño se calcula una única vez aquí, dentro del ámbito de seguridad,
+    // porque `size` se leía antes en cada evaluación del body de SwiftUI
+    // (bug #7 de la auditoría): golpeaba disco constantemente y, si el ámbito
+    // de seguridad no estaba abierto, podía devolver 0 para ficheros fuera del sandbox.
+    init(url: URL) {
+        self.url = url
+        self.name = url.lastPathComponent
 
-    var size: Int64 {
+        let didAccess = url.startAccessingSecurityScopedResource()
+        defer {
+            if didAccess {
+                url.stopAccessingSecurityScopedResource()
+            }
+        }
         let values = try? url.resourceValues(forKeys: [.fileSizeKey])
-        return Int64(values?.fileSize ?? 0)
+        self.size = Int64(values?.fileSize ?? 0)
     }
 
     static func == (lhs: SelectedFile, rhs: SelectedFile) -> Bool {
