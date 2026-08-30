@@ -39,6 +39,11 @@ struct ReceiveView: View {
                     .background(TDDColor.card)
                     .clipShape(RoundedRectangle(cornerRadius: TDDRadius.xl))
 
+                    // Sprint 1: descubrimiento LocalSend. Convive con el
+                    // flujo viejo de abajo, que sigue en el protocolo propio
+                    // hasta la Sprint 2.
+                    NearbyDevicesSection()
+
                     if service.receivedFiles.isEmpty {
                         EmptyStateView(
                             icon: "tray.and.arrow.down",

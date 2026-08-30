@@ -26,6 +26,23 @@
 		9A0000010000000000000011 /* TabButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A1000010000000000000014 /* TabButton.swift */; };
 		9A0000010000000000000012 /* PrimaryButtonStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A1000010000000000000015 /* PrimaryButtonStyle.swift */; };
 		9A0000010000000000000013 /* IncomingTransfer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A1000010000000000000016 /* IncomingTransfer.swift */; };
+		9A0000010000000000000017 /* Device.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A1000010000000000000017 /* Device.swift */; };
+		9A0000010000000000000018 /* ProtocolSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A1000010000000000000018 /* ProtocolSpec.swift */; };
+		9A0000010000000000000019 /* DTOs.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A1000010000000000000019 /* DTOs.swift */; };
+		9A000001000000000000001A /* ASN1.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A100001000000000000001A /* ASN1.swift */; };
+		9A000001000000000000001B /* X509CertificateBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A100001000000000000001B /* X509CertificateBuilder.swift */; };
+		9A000001000000000000001C /* PKCS12KDF.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A100001000000000000001C /* PKCS12KDF.swift */; };
+		9A000001000000000000001D /* PBE3DES.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A100001000000000000001D /* PBE3DES.swift */; };
+		9A000001000000000000001E /* PKCS12Builder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A100001000000000000001E /* PKCS12Builder.swift */; };
+		9A000001000000000000001F /* TLSIdentity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A100001000000000000001F /* TLSIdentity.swift */; };
+		9A0000010000000000000020 /* HTTPServer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A1000010000000000000020 /* HTTPServer.swift */; };
+		9A0000010000000000000021 /* HTTPServerSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A1000010000000000000021 /* HTTPServerSession.swift */; };
+		9A0000010000000000000022 /* HTTPClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A1000010000000000000022 /* HTTPClient.swift */; };
+		9A0000010000000000000023 /* HTTPClientExchange.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A1000010000000000000023 /* HTTPClientExchange.swift */; };
+		9A0000010000000000000024 /* LocalInterfaces.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A1000010000000000000024 /* LocalInterfaces.swift */; };
+		9A0000010000000000000025 /* Discovery.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A1000010000000000000025 /* Discovery.swift */; };
+		9A0000010000000000000026 /* DiscoveryStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A1000010000000000000026 /* DiscoveryStore.swift */; };
+		9A0000010000000000000027 /* NearbyDevicesSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A1000010000000000000027 /* NearbyDevicesSection.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -51,6 +68,23 @@
 		9A1000010000000000000014 /* TabButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabButton.swift; sourceTree = "<group>"; };
 		9A1000010000000000000015 /* PrimaryButtonStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrimaryButtonStyle.swift; sourceTree = "<group>"; };
 		9A1000010000000000000016 /* IncomingTransfer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IncomingTransfer.swift; sourceTree = "<group>"; };
+		9A1000010000000000000017 /* Device.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Device.swift; sourceTree = "<group>"; };
+		9A1000010000000000000018 /* ProtocolSpec.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProtocolSpec.swift; sourceTree = "<group>"; };
+		9A1000010000000000000019 /* DTOs.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DTOs.swift; sourceTree = "<group>"; };
+		9A100001000000000000001A /* ASN1.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ASN1.swift; sourceTree = "<group>"; };
+		9A100001000000000000001B /* X509CertificateBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = X509CertificateBuilder.swift; sourceTree = "<group>"; };
+		9A100001000000000000001C /* PKCS12KDF.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PKCS12KDF.swift; sourceTree = "<group>"; };
+		9A100001000000000000001D /* PBE3DES.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PBE3DES.swift; sourceTree = "<group>"; };
+		9A100001000000000000001E /* PKCS12Builder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PKCS12Builder.swift; sourceTree = "<group>"; };
+		9A100001000000000000001F /* TLSIdentity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TLSIdentity.swift; sourceTree = "<group>"; };
+		9A1000010000000000000020 /* HTTPServer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HTTPServer.swift; sourceTree = "<group>"; };
+		9A1000010000000000000021 /* HTTPServerSession.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HTTPServerSession.swift; sourceTree = "<group>"; };
+		9A1000010000000000000022 /* HTTPClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HTTPClient.swift; sourceTree = "<group>"; };
+		9A1000010000000000000023 /* HTTPClientExchange.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HTTPClientExchange.swift; sourceTree = "<group>"; };
+		9A1000010000000000000024 /* LocalInterfaces.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalInterfaces.swift; sourceTree = "<group>"; };
+		9A1000010000000000000025 /* Discovery.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Discovery.swift; sourceTree = "<group>"; };
+		9A1000010000000000000026 /* DiscoveryStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiscoveryStore.swift; sourceTree = "<group>"; };
+		9A1000010000000000000027 /* NearbyDevicesSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NearbyDevicesSection.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -67,30 +101,32 @@
 		9A3000010000000000000001 = {
 			isa = PBXGroup;
 			children = (
-				9A3000010000000000000002 /*  */,
+				9A3000010000000000000002,
 				9A3000010000000000000008 /* Products */,
 			);
 			sourceTree = "<group>";
 		};
-		9A3000010000000000000002 /*  */ = {
+		9A3000010000000000000002 = {
 			isa = PBXGroup;
 			children = (
 				9A1000010000000000000001 /* NexoApp.swift */,
 				9A1000010000000000000009 /* DesignTokens.swift */,
 				9A3000010000000000000003 /* Models */,
+				9A300001000000000000000D /* Network */,
+				9A300001000000000000000E /* Stores */,
 				9A3000010000000000000004 /* Services */,
 				9A3000010000000000000005 /* ViewModels */,
 				9A3000010000000000000006 /* Views */,
 				9A1000010000000000000006 /* Info.plist */,
 				9A1000010000000000000008 /* Nexo.entitlements */,
 			);
-			name = "";
 			sourceTree = "<group>";
 		};
 		9A3000010000000000000003 /* Models */ = {
 			isa = PBXGroup;
 			children = (
 				9A1000010000000000000002 /* TransferModels.swift */,
+				9A1000010000000000000017 /* Device.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -124,6 +160,14 @@
 			path = Views;
 			sourceTree = "<group>";
 		};
+		9A3000010000000000000008 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				9A1000010000000000000007 /* Nexo.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
 		9A3000010000000000000009 /* Send */ = {
 			isa = PBXGroup;
 			children = (
@@ -140,6 +184,7 @@
 			isa = PBXGroup;
 			children = (
 				9A100001000000000000000F /* ReceiveView.swift */,
+				9A1000010000000000000027 /* NearbyDevicesSection.swift */,
 			);
 			path = Receive;
 			sourceTree = "<group>";
@@ -164,12 +209,33 @@
 			path = Components;
 			sourceTree = "<group>";
 		};
-		9A3000010000000000000008 /* Products */ = {
+		9A300001000000000000000D /* Network */ = {
 			isa = PBXGroup;
 			children = (
-				9A1000010000000000000007 /* Nexo.app */,
+				9A1000010000000000000018 /* ProtocolSpec.swift */,
+				9A1000010000000000000019 /* DTOs.swift */,
+				9A100001000000000000001A /* ASN1.swift */,
+				9A100001000000000000001B /* X509CertificateBuilder.swift */,
+				9A100001000000000000001C /* PKCS12KDF.swift */,
+				9A100001000000000000001D /* PBE3DES.swift */,
+				9A100001000000000000001E /* PKCS12Builder.swift */,
+				9A100001000000000000001F /* TLSIdentity.swift */,
+				9A1000010000000000000020 /* HTTPServer.swift */,
+				9A1000010000000000000021 /* HTTPServerSession.swift */,
+				9A1000010000000000000022 /* HTTPClient.swift */,
+				9A1000010000000000000023 /* HTTPClientExchange.swift */,
+				9A1000010000000000000024 /* LocalInterfaces.swift */,
+				9A1000010000000000000025 /* Discovery.swift */,
 			);
-			name = Products;
+			path = Network;
+			sourceTree = "<group>";
+		};
+		9A300001000000000000000E /* Stores */ = {
+			isa = PBXGroup;
+			children = (
+				9A1000010000000000000026 /* DiscoveryStore.swift */,
+			);
+			path = Stores;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -261,6 +327,23 @@
 				9A0000010000000000000011 /* TabButton.swift in Sources */,
 				9A0000010000000000000012 /* PrimaryButtonStyle.swift in Sources */,
 				9A0000010000000000000013 /* IncomingTransfer.swift in Sources */,
+				9A0000010000000000000017 /* Device.swift in Sources */,
+				9A0000010000000000000018 /* ProtocolSpec.swift in Sources */,
+				9A0000010000000000000019 /* DTOs.swift in Sources */,
+				9A000001000000000000001A /* ASN1.swift in Sources */,
+				9A000001000000000000001B /* X509CertificateBuilder.swift in Sources */,
+				9A000001000000000000001C /* PKCS12KDF.swift in Sources */,
+				9A000001000000000000001D /* PBE3DES.swift in Sources */,
+				9A000001000000000000001E /* PKCS12Builder.swift in Sources */,
+				9A000001000000000000001F /* TLSIdentity.swift in Sources */,
+				9A0000010000000000000020 /* HTTPServer.swift in Sources */,
+				9A0000010000000000000021 /* HTTPServerSession.swift in Sources */,
+				9A0000010000000000000022 /* HTTPClient.swift in Sources */,
+				9A0000010000000000000023 /* HTTPClientExchange.swift in Sources */,
+				9A0000010000000000000024 /* LocalInterfaces.swift in Sources */,
+				9A0000010000000000000025 /* Discovery.swift in Sources */,
+				9A0000010000000000000026 /* DiscoveryStore.swift in Sources */,
+				9A0000010000000000000027 /* NearbyDevicesSection.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -279,6 +362,7 @@
 				ENABLE_HARDENED_RUNTIME = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = Nexo;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.utilities";
 				IPHONEOS_DEPLOYMENT_TARGET = 18.0;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -308,6 +392,7 @@
 				ENABLE_HARDENED_RUNTIME = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = Nexo;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.utilities";
 				IPHONEOS_DEPLOYMENT_TARGET = 18.0;
 				LD_RUNPATH_SEARCH_PATHS = (
